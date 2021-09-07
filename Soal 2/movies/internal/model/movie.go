@@ -31,9 +31,11 @@ type MovieSearch struct {
 // UsecaseMovie ...
 type UsecaseMovie interface {
 	SearchValidate(ctx context.Context, keyword, page string) ([]*MovieRPC, error)
+	DetailMovie(ctx context.Context, id string) (*MovieRPC, error)
 }
 
 // RepositoryMovie ...
 type RepositoryMovie interface {
 	Search(ctx context.Context, keyword, page string) (*MovieSearch, error)
+	GetByID(ctx context.Context, id string) (*Movie, error)
 }

@@ -50,3 +50,37 @@ func (mu *MovieUsecase) SearchValidate(ctx context.Context, keyword, page string
 
 	return movieRPCs, nil
 }
+
+// DetailMovie ...
+func (mu *MovieUsecase) DetailMovie(ctx context.Context, id string) (*model.MovieRPC, error) {
+	if id == "" {
+		return nil, fmt.Errorf("id can't be empty")
+	}
+
+	m, err := mu.MovieRepo.GetByID(ctx, id)
+	if err != nil {
+		return nil, err
+	}
+
+	movie := &model.MovieRPC{
+		Title:      m.Title,
+		Year:       m.Year,
+		ImdbID:     m.ImdbID,
+		Type:       m.Type,
+		Poster:     m.Poster,
+		Rated:      m.Rated,
+		Released:   m.Released,
+		Runtime:    m.Runtime,
+		Genre:      m.Genre,
+		Director:   m.Director,
+		Writer:     m.Writer,
+		Actors:     m.Actors,
+		Plot:       m.Plot,
+		Language:   m.Language,
+		Country:    m.Country,
+		Awards:     m.Awards,
+		ImdbRating: m.ImdbRating,
+	}
+
+	return movie, nil
+}

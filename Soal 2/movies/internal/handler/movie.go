@@ -37,3 +37,15 @@ func (mh *MovieHandler) SearchMovie(ctx context.Context, req *model.RequestSearc
 
 	return resp, nil
 }
+
+// GetMovieDetail ...
+func (mh *MovieHandler) GetMovieDetail(ctx context.Context, req *model.RequestMovieDetail) (*model.MovieRPC, error) {
+	imdbID := req.ImdbID
+
+	movie, err := mh.MovieUC.DetailMovie(ctx, imdbID)
+	if err != nil {
+		return nil, err
+	}
+
+	return movie, nil
+}

@@ -1,9 +1,12 @@
 package main
 
 import (
+	"fmt"
 	"log"
 	"net"
+	"os"
 
+	"github.com/RiskyFeryansyahP/bibit-movies/config"
 	"github.com/RiskyFeryansyahP/bibit-movies/internal/handler"
 	"github.com/RiskyFeryansyahP/bibit-movies/internal/repository"
 	"github.com/RiskyFeryansyahP/bibit-movies/internal/usecase"
@@ -11,6 +14,15 @@ import (
 )
 
 func main() {
+	port := os.Getenv("PORT")
+	if port == "" {
+		port = "8081"
+	}
+
+	port = fmt.Sprintf(":%s", port)
+
+	cfg := config.NewMapConfig()
+
 	l, err := net.Listen("tcp", ":8081")
 	if err != nil {
 		log.Fatalf("failed to listen movie service: %v", err)
@@ -18,7 +30,7 @@ func main() {
 
 	s := grpc.NewServer()
 
-	repo := repository.NewMovieRepository()
+	repo := repository.NewMovieRepository(cfg)
 	uc := usecase.NewMovieUsecase(repo)
 	handler.NewMovieHandler(s, uc)
 
