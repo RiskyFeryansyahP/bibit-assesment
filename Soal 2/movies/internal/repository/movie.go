@@ -7,22 +7,29 @@ import (
 	"io"
 	"net/http"
 
+	"github.com/RiskyFeryansyahP/bibit-movies/config"
 	"github.com/RiskyFeryansyahP/bibit-movies/internal/model"
+
+	_ "github.com/joho/godotenv/autoload" // autoload env
 )
 
 // MovieRepository ...
-type MovieRepository struct{}
+type MovieRepository struct {
+	Config *config.MapConfig
+}
 
 // NewMovieRepository ...
-func NewMovieRepository() model.RepositoryMovie {
-	return &MovieRepository{}
+func NewMovieRepository(cfg *config.MapConfig) model.RepositoryMovie {
+	return &MovieRepository{
+		Config: cfg,
+	}
 }
 
 // Search ...
 func (mr *MovieRepository) Search(ctx context.Context, keyword, page string) (*model.MovieSearch, error) {
 	var movies *model.MovieSearch
 
-	url := fmt.Sprintf("http://www.omdbapi.com/?apikey=faf7e5bb&s=%s&page=%s", keyword, page)
+	url := fmt.Sprintf("%s?apikey=%s&s=%s&page=%s", mr.Config.OmdbURL, mr.Config.OmdbAPIKey, keyword, page)
 
 	resp, err := http.Get(url)
 	if err != nil {
@@ -37,4 +44,26 @@ func (mr *MovieRepository) Search(ctx context.Context, keyword, page string) (*m
 	_ = json.Unmarshal(b, &movies)
 
 	return movies, nil
+}
+
+// GetByID ...
+func (mr *MovieRepository) GetByID(ctx context.Context, id string) (*model.Movie, error) {
+	var movie *model.Movie
+
+	// get detail movie using imdbID
+	url := fmt.Sprintf("%s?apikey=%s&i=%s", mr.Config.OmdbURL, mr.Config.OmdbAPIKey, id)
+
+	resp, err := http.Get(url)
+	if err != nil {
+		return nil, err
+	}
+
+	b, err := io.ReadAll(resp.Body)
+	if err != nil {
+		return nil, err
+	}
+
+	_ = json.Unmarshal(b, &movie)
+
+	return movie, nil
 }

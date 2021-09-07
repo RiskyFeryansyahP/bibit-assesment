@@ -301,6 +301,53 @@ func (x *RequestSearchMovies) GetPagination() string {
 	return ""
 }
 
+type RequestMovieDetail struct {
+	state         protoimpl.MessageState
+	sizeCache     protoimpl.SizeCache
+	unknownFields protoimpl.UnknownFields
+
+	ImdbID string `protobuf:"bytes,1,opt,name=imdbID,proto3" json:"imdbID,omitempty"`
+}
+
+func (x *RequestMovieDetail) Reset() {
+	*x = RequestMovieDetail{}
+	if protoimpl.UnsafeEnabled {
+		mi := &file_movie_proto_msgTypes[3]
+		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
+		ms.StoreMessageInfo(mi)
+	}
+}
+
+func (x *RequestMovieDetail) String() string {
+	return protoimpl.X.MessageStringOf(x)
+}
+
+func (*RequestMovieDetail) ProtoMessage() {}
+
+func (x *RequestMovieDetail) ProtoReflect() protoreflect.Message {
+	mi := &file_movie_proto_msgTypes[3]
+	if protoimpl.UnsafeEnabled && x != nil {
+		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
+		if ms.LoadMessageInfo() == nil {
+			ms.StoreMessageInfo(mi)
+		}
+		return ms
+	}
+	return mi.MessageOf(x)
+}
+
+// Deprecated: Use RequestMovieDetail.ProtoReflect.Descriptor instead.
+func (*RequestMovieDetail) Descriptor() ([]byte, []int) {
+	return file_movie_proto_rawDescGZIP(), []int{3}
+}
+
+func (x *RequestMovieDetail) GetImdbID() string {
+	if x != nil {
+		return x.ImdbID
+	}
+	return ""
+}
+
 var File_movie_proto protoreflect.FileDescriptor
 
 var file_movie_proto_rawDesc = []byte{
@@ -341,14 +388,20 @@ var file_movie_proto_rawDesc = []byte{
 	0x68, 0x77, 0x6f, 0x72, 0x64, 0x18, 0x01, 0x20, 0x01, 0x28, 0x09, 0x52, 0x0a, 0x73, 0x65, 0x61,
 	0x72, 0x63, 0x68, 0x77, 0x6f, 0x72, 0x64, 0x12, 0x1e, 0x0a, 0x0a, 0x70, 0x61, 0x67, 0x69, 0x6e,
 	0x61, 0x74, 0x69, 0x6f, 0x6e, 0x18, 0x02, 0x20, 0x01, 0x28, 0x09, 0x52, 0x0a, 0x70, 0x61, 0x67,
-	0x69, 0x6e, 0x61, 0x74, 0x69, 0x6f, 0x6e, 0x32, 0x56, 0x0a, 0x0c, 0x4d, 0x6f, 0x76, 0x69, 0x65,
-	0x53, 0x65, 0x72, 0x76, 0x69, 0x63, 0x65, 0x12, 0x46, 0x0a, 0x0b, 0x53, 0x65, 0x61, 0x72, 0x63,
-	0x68, 0x4d, 0x6f, 0x76, 0x69, 0x65, 0x12, 0x1a, 0x2e, 0x6d, 0x6f, 0x64, 0x65, 0x6c, 0x2e, 0x52,
-	0x65, 0x71, 0x75, 0x65, 0x73, 0x74, 0x53, 0x65, 0x61, 0x72, 0x63, 0x68, 0x4d, 0x6f, 0x76, 0x69,
-	0x65, 0x73, 0x1a, 0x1b, 0x2e, 0x6d, 0x6f, 0x64, 0x65, 0x6c, 0x2e, 0x52, 0x65, 0x73, 0x70, 0x6f,
-	0x6e, 0x73, 0x65, 0x53, 0x65, 0x61, 0x72, 0x63, 0x68, 0x4d, 0x6f, 0x76, 0x69, 0x65, 0x73, 0x42,
-	0x09, 0x5a, 0x07, 0x2e, 0x2f, 0x6d, 0x6f, 0x64, 0x65, 0x6c, 0x62, 0x06, 0x70, 0x72, 0x6f, 0x74,
-	0x6f, 0x33,
+	0x69, 0x6e, 0x61, 0x74, 0x69, 0x6f, 0x6e, 0x22, 0x2c, 0x0a, 0x12, 0x52, 0x65, 0x71, 0x75, 0x65,
+	0x73, 0x74, 0x4d, 0x6f, 0x76, 0x69, 0x65, 0x44, 0x65, 0x74, 0x61, 0x69, 0x6c, 0x12, 0x16, 0x0a,
+	0x06, 0x69, 0x6d, 0x64, 0x62, 0x49, 0x44, 0x18, 0x01, 0x20, 0x01, 0x28, 0x09, 0x52, 0x06, 0x69,
+	0x6d, 0x64, 0x62, 0x49, 0x44, 0x32, 0x94, 0x01, 0x0a, 0x0c, 0x4d, 0x6f, 0x76, 0x69, 0x65, 0x53,
+	0x65, 0x72, 0x76, 0x69, 0x63, 0x65, 0x12, 0x46, 0x0a, 0x0b, 0x53, 0x65, 0x61, 0x72, 0x63, 0x68,
+	0x4d, 0x6f, 0x76, 0x69, 0x65, 0x12, 0x1a, 0x2e, 0x6d, 0x6f, 0x64, 0x65, 0x6c, 0x2e, 0x52, 0x65,
+	0x71, 0x75, 0x65, 0x73, 0x74, 0x53, 0x65, 0x61, 0x72, 0x63, 0x68, 0x4d, 0x6f, 0x76, 0x69, 0x65,
+	0x73, 0x1a, 0x1b, 0x2e, 0x6d, 0x6f, 0x64, 0x65, 0x6c, 0x2e, 0x52, 0x65, 0x73, 0x70, 0x6f, 0x6e,
+	0x73, 0x65, 0x53, 0x65, 0x61, 0x72, 0x63, 0x68, 0x4d, 0x6f, 0x76, 0x69, 0x65, 0x73, 0x12, 0x3c,
+	0x0a, 0x0e, 0x47, 0x65, 0x74, 0x4d, 0x6f, 0x76, 0x69, 0x65, 0x44, 0x65, 0x74, 0x61, 0x69, 0x6c,
+	0x12, 0x19, 0x2e, 0x6d, 0x6f, 0x64, 0x65, 0x6c, 0x2e, 0x52, 0x65, 0x71, 0x75, 0x65, 0x73, 0x74,
+	0x4d, 0x6f, 0x76, 0x69, 0x65, 0x44, 0x65, 0x74, 0x61, 0x69, 0x6c, 0x1a, 0x0f, 0x2e, 0x6d, 0x6f,
+	0x64, 0x65, 0x6c, 0x2e, 0x4d, 0x6f, 0x76, 0x69, 0x65, 0x52, 0x50, 0x43, 0x42, 0x09, 0x5a, 0x07,
+	0x2e, 0x2f, 0x6d, 0x6f, 0x64, 0x65, 0x6c, 0x62, 0x06, 0x70, 0x72, 0x6f, 0x74, 0x6f, 0x33,
 }
 
 var (
@@ -363,18 +416,21 @@ func file_movie_proto_rawDescGZIP() []byte {
 	return file_movie_proto_rawDescData
 }
 
-var file_movie_proto_msgTypes = make([]protoimpl.MessageInfo, 3)
+var file_movie_proto_msgTypes = make([]protoimpl.MessageInfo, 4)
 var file_movie_proto_goTypes = []interface{}{
 	(*MovieRPC)(nil),             // 0: model.MovieRPC
 	(*ResponseSearchMovies)(nil), // 1: model.ResponseSearchMovies
 	(*RequestSearchMovies)(nil),  // 2: model.RequestSearchMovies
+	(*RequestMovieDetail)(nil),   // 3: model.RequestMovieDetail
 }
 var file_movie_proto_depIdxs = []int32{
 	0, // 0: model.ResponseSearchMovies.movies:type_name -> model.MovieRPC
 	2, // 1: model.MovieService.SearchMovie:input_type -> model.RequestSearchMovies
-	1, // 2: model.MovieService.SearchMovie:output_type -> model.ResponseSearchMovies
-	2, // [2:3] is the sub-list for method output_type
-	1, // [1:2] is the sub-list for method input_type
+	3, // 2: model.MovieService.GetMovieDetail:input_type -> model.RequestMovieDetail
+	1, // 3: model.MovieService.SearchMovie:output_type -> model.ResponseSearchMovies
+	0, // 4: model.MovieService.GetMovieDetail:output_type -> model.MovieRPC
+	3, // [3:5] is the sub-list for method output_type
+	1, // [1:3] is the sub-list for method input_type
 	1, // [1:1] is the sub-list for extension type_name
 	1, // [1:1] is the sub-list for extension extendee
 	0, // [0:1] is the sub-list for field type_name
@@ -422,6 +478,18 @@ func file_movie_proto_init() {
 				return nil
 			}
 		}
+		file_movie_proto_msgTypes[3].Exporter = func(v interface{}, i int) interface{} {
+			switch v := v.(*RequestMovieDetail); i {
+			case 0:
+				return &v.state
+			case 1:
+				return &v.sizeCache
+			case 2:
+				return &v.unknownFields
+			default:
+				return nil
+			}
+		}
 	}
 	type x struct{}
 	out := protoimpl.TypeBuilder{
@@ -429,7 +497,7 @@ func file_movie_proto_init() {
 			GoPackagePath: reflect.TypeOf(x{}).PkgPath(),
 			RawDescriptor: file_movie_proto_rawDesc,
 			NumEnums:      0,
-			NumMessages:   3,
+			NumMessages:   4,
 			NumExtensions: 0,
 			NumServices:   1,
 		},
@@ -456,6 +524,7 @@ const _ = grpc.SupportPackageIsVersion6
 // For semantics around ctx use and closing/ending streaming RPCs, please refer to https://godoc.org/google.golang.org/grpc#ClientConn.NewStream.
 type MovieServiceClient interface {
 	SearchMovie(ctx context.Context, in *RequestSearchMovies, opts ...grpc.CallOption) (*ResponseSearchMovies, error)
+	GetMovieDetail(ctx context.Context, in *RequestMovieDetail, opts ...grpc.CallOption) (*MovieRPC, error)
 }
 
 type movieServiceClient struct {
@@ -475,9 +544,19 @@ func (c *movieServiceClient) SearchMovie(ctx context.Context, in *RequestSearchM
 	return out, nil
 }
 
+func (c *movieServiceClient) GetMovieDetail(ctx context.Context, in *RequestMovieDetail, opts ...grpc.CallOption) (*MovieRPC, error) {
+	out := new(MovieRPC)
+	err := c.cc.Invoke(ctx, "/model.MovieService/GetMovieDetail", in, out, opts...)
+	if err != nil {
+		return nil, err
+	}
+	return out, nil
+}
+
 // MovieServiceServer is the server API for MovieService service.
 type MovieServiceServer interface {
 	SearchMovie(context.Context, *RequestSearchMovies) (*ResponseSearchMovies, error)
+	GetMovieDetail(context.Context, *RequestMovieDetail) (*MovieRPC, error)
 }
 
 // UnimplementedMovieServiceServer can be embedded to have forward compatible implementations.
@@ -486,6 +565,9 @@ type UnimplementedMovieServiceServer struct {
 
 func (*UnimplementedMovieServiceServer) SearchMovie(context.Context, *RequestSearchMovies) (*ResponseSearchMovies, error) {
 	return nil, status.Errorf(codes.Unimplemented, "method SearchMovie not implemented")
+}
+func (*UnimplementedMovieServiceServer) GetMovieDetail(context.Context, *RequestMovieDetail) (*MovieRPC, error) {
+	return nil, status.Errorf(codes.Unimplemented, "method GetMovieDetail not implemented")
 }
 
 func RegisterMovieServiceServer(s *grpc.Server, srv MovieServiceServer) {
@@ -510,6 +592,24 @@ func _MovieService_SearchMovie_Handler(srv interface{}, ctx context.Context, dec
 	return interceptor(ctx, in, info, handler)
 }
 
+func _MovieService_GetMovieDetail_Handler(srv interface{}, ctx context.Context, dec func(interface{}) error, interceptor grpc.UnaryServerInterceptor) (interface{}, error) {
+	in := new(RequestMovieDetail)
+	if err := dec(in); err != nil {
+		return nil, err
+	}
+	if interceptor == nil {
+		return srv.(MovieServiceServer).GetMovieDetail(ctx, in)
+	}
+	info := &grpc.UnaryServerInfo{
+		Server:     srv,
+		FullMethod: "/model.MovieService/GetMovieDetail",
+	}
+	handler := func(ctx context.Context, req interface{}) (interface{}, error) {
+		return srv.(MovieServiceServer).GetMovieDetail(ctx, req.(*RequestMovieDetail))
+	}
+	return interceptor(ctx, in, info, handler)
+}
+
 var _MovieService_serviceDesc = grpc.ServiceDesc{
 	ServiceName: "model.MovieService",
 	HandlerType: (*MovieServiceServer)(nil),
@@ -517,6 +617,10 @@ var _MovieService_serviceDesc = grpc.ServiceDesc{
 		{
 			MethodName: "SearchMovie",
 			Handler:    _MovieService_SearchMovie_Handler,
+		},
+		{
+			MethodName: "GetMovieDetail",
+			Handler:    _MovieService_GetMovieDetail_Handler,
 		},
 	},
 	Streams:  []grpc.StreamDesc{},
