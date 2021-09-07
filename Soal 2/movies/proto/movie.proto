@@ -1,0 +1,26 @@
+syntax = "proto3";
+
+package model;
+
+option go_package = "./model";
+
+message Movie {
+    string title = 1;
+    string year = 2;
+    string imdbID = 3;
+    string type = 4;
+    string poster = 5;
+}
+
+message ResponseSearchMovies {
+    repeated Movie movies = 1;
+}
+
+message RequestSearchMovies {
+    string searchword = 1;
+    string pagination = 2;
+}
+
+service MovieService {
+    rpc SearchMovie(RequestSearchMovies) returns (ResponseSearchMovies);
+}
