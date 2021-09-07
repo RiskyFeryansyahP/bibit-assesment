@@ -26,7 +26,7 @@ func (mh *MovieHandler) SearchMovie(ctx context.Context, req *model.RequestSearc
 	keyword := req.Searchword
 	page := req.Pagination
 
-	movies, err := mh.MovieUC.SearchMovie(ctx, keyword, page)
+	movies, err := mh.MovieUC.SearchValidate(ctx, keyword, page)
 	if err != nil {
 		return nil, err
 	}

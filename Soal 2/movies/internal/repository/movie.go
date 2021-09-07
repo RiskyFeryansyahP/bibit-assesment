@@ -19,8 +19,8 @@ func NewMovieRepository() model.RepositoryMovie {
 }
 
 // Search ...
-func (mr *MovieRepository) Search(ctx context.Context, keyword, page string) ([]*model.Movie, error) {
-	var movies []*model.Movie
+func (mr *MovieRepository) Search(ctx context.Context, keyword, page string) (*model.MovieSearch, error) {
+	var movies *model.MovieSearch
 
 	url := fmt.Sprintf("http://www.omdbapi.com/?apikey=faf7e5bb&s=%s&page=%s", keyword, page)
 

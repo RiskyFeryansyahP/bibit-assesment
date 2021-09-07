@@ -19,8 +19,8 @@ func NewMovieUsecase(movieRepo model.RepositoryMovie) model.UsecaseMovie {
 	}
 }
 
-// SearchMovie ...
-func (mu *MovieUsecase) SearchMovie(ctx context.Context, keyword, page string) ([]*model.Movie, error) {
+// SearchValidate ...
+func (mu *MovieUsecase) SearchValidate(ctx context.Context, keyword, page string) ([]*model.MovieRPC, error) {
 	if keyword == "" {
 		return nil, fmt.Errorf("keyword can't be empty")
 	}
@@ -34,5 +34,19 @@ func (mu *MovieUsecase) SearchMovie(ctx context.Context, keyword, page string) (
 		return nil, err
 	}
 
-	return movies, nil
+	movieRPCs := make([]*model.MovieRPC, len(movies.Search))
+
+	for k, v := range movies.Search {
+		movieRPC := &model.MovieRPC{
+			Title:  v.Title,
+			Year:   v.Year,
+			ImdbID: v.ImdbID,
+			Type:   v.Type,
+			Poster: v.Poster,
+		}
+
+		movieRPCs[k] = movieRPC
+	}
+
+	return movieRPCs, nil
 }
