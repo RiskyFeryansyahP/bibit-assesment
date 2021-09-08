@@ -10,7 +10,7 @@ please before you run this application please have installed some this requireme
 ### Run Test
 To run a test you can simply run the `make test` command and to see the coverage of the test you can run` make cover` (make sure your computer can run Makefile). Don't forget to go into each directory to do the test.
 
-### Run Application
+### Run Application - Without Docker Compose
 
 #### Movies Service
 First, you must running movie service before running API Gateway.
@@ -21,15 +21,14 @@ OMDB_URL= [omdb url]
 OMDB_API_KEY= [your main omdb api key]
 DB_HOST= [your main database host]
 DB_PORT= [your main database port]
-DB_USERNAME= [your main database username]
-DB_PASSWORD= [your main database password]
+DB_USER= [your main database username]
+DB_PASS= [your main database password]
 DB_NAME= [your main database name which will be used]
 DB_SSL_MODE= [SSL MODE (this is only for the postgres database)]
 ```
 
 after complete setting environment variables then you can run the command `make run` (make sure your computer can run Makefile) to build the application and wait for the build process done.
 make sure you have run postgres database.
-
 #### API Gateway
 After running movies service we can run API Gateway for handle request from client, to running it, make sure you go into gateway directory using `cd gateway`, then set the environment variable for this application, edit `.env.example` to `.env` then set:
 
@@ -39,6 +38,64 @@ MOVIE_PORT=8081
 ```
 
 after complete setting environment variables then you can run the command `make run` (make sure your computer can run Makefile) to build the application and wait for the build process done. then the application will be running.
+
+### Run Application - With Docker Compose
+By using docker compose you can easily run this application. make sure you have installed Docker on your computer or laptop.
+
+first build a docker image for this application by running `make docker-build` in each directory service (e.g movie and gateway). After building the docker image, you can immediately run docker compose by executing the command `docker-compose up`, please wait for the application to run.
+
+here below is `docker-compose.yaml` file:
+
+```yaml
+version: "3.9"
+services:
+
+  # postgres db
+  postgres:
+    image: postgres:13.3-alpine
+    restart: always
+    ports: 
+      - 5432:5432
+    environment:
+      POSTGRES_PASSWORD: root
+      POSTGRES_DB: bibit
+    healthcheck:
+      test: ["CMD-SHELL", "pg_isready -U postgres"]
+      interval: 10s
+      timeout: 5s
+      retries: 5
+
+  movie:
+    image: bibit-movie:1.0.0
+    restart: always
+    ports:
+      - 8081:8081
+    depends_on:
+      postgres:
+        condition: service_healthy
+    environment:
+      OMDB_URL: http://www.omdbapi.com/
+      OMDB_API_KEY: faf7e5bb
+      DB_HOST: postgres
+      DB_PORT: 5432
+      DB_USER: postgres
+      DB_PASS: root
+      DB_NAME: bibit
+      DB_SSL_MODE: disable
+      PORT: 8081
+
+  gateway:
+    image: bibit-gateway:1.0.0
+    restart: always
+    ports:
+      - 8080:8080
+    depends_on:
+      - movie
+    environment:
+      PORT: 8080
+      MOVIE_PORT: 8081
+      MOVIE_SERVICE_HOST: movie
+```
 
 ## HTTP Endpoint
 
