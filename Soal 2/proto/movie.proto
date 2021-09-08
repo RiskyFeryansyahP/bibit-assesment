@@ -1,0 +1,43 @@
+syntax = "proto3";
+
+package model;
+
+option go_package = "./model";
+
+message MovieRPC {
+    string Title = 1;
+    string Year = 2;
+    string imdbID = 3;
+    string Type = 4;
+    string Poster = 5;
+    string Rated = 6;
+    string Released = 7;
+	string Runtime = 8;
+	string Genre = 9;
+	string Director = 10;
+	string Writer = 11;
+	string Actors = 12;
+	string Plot = 13;
+	string Language = 14;
+	string Country = 15;
+	string Awards = 16;
+	string ImdbRating = 17;
+}
+
+message ResponseSearchMovies {
+    repeated MovieRPC movies = 1;
+}
+
+message RequestSearchMovies {
+    string searchword = 1;
+    string pagination = 2;
+}
+
+message RequestMovieDetail {
+    string imdbID = 1;
+}
+
+service MovieService {
+    rpc SearchMovie(RequestSearchMovies) returns (ResponseSearchMovies);
+    rpc GetMovieDetail(RequestMovieDetail) returns (MovieRPC);
+}
