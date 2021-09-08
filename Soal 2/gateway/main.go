@@ -18,20 +18,25 @@ import (
 
 func main() {
 	port := os.Getenv("PORT")
-	movieService := os.Getenv("MOVIE_SERVICE")
+	movieServicePort := os.Getenv("MOVIE_SERVICE")
+	movieHost := os.Getenv("MOVIE_SERVICE_HOST")
 
 	if port == "" {
 		port = "8080"
 	}
 
-	if movieService == "" {
-		movieService = "8081"
+	if movieServicePort == "" {
+		movieServicePort = "8081"
+	}
+
+	if movieHost == "" {
+		movieHost = "localhost"
 	}
 
 	port = fmt.Sprintf(":%s", port)
-	movieService = fmt.Sprintf(":%s", movieService)
+	movieServicePort = fmt.Sprintf("%s:%s", movieHost, movieServicePort)
 
-	conn, err := grpc.Dial(movieService, grpc.WithInsecure())
+	conn, err := grpc.Dial(movieServicePort, grpc.WithInsecure())
 	if err != nil {
 		log.Fatalf("failed to connect grpc movies server: %s", err)
 	}
