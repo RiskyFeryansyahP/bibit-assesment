@@ -76,6 +76,14 @@ func TestSearchValidate(t *testing.T) {
 
 		require.Error(t, err)
 	})
+}
+
+func TestDetailMovie(t *testing.T) {
+	ctrl := gomock.NewController(t)
+
+	ctx := context.Background()
+
+	repo := mock.NewMockRepositoryMovie(ctrl)
 
 	t.Run("detail movie should be success", func(t *testing.T) {
 		imdbID := "tt4853102"

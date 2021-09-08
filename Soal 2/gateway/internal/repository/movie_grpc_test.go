@@ -48,6 +48,14 @@ func TestSearch(t *testing.T) {
 
 		require.Error(t, err)
 	})
+}
+
+func TestGetByID(t *testing.T) {
+	ctrl := gomock.NewController(t)
+
+	ctx := context.Background()
+
+	movieServiceMock := mock.NewMockMovieServiceClient(ctrl)
 
 	t.Run("detail movie should be success", func(t *testing.T) {
 		input := &model.RequestMovieDetail{
