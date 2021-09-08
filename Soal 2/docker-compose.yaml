@@ -10,3 +10,39 @@ services:
     environment:
       POSTGRES_PASSWORD: root
       POSTGRES_DB: bibit
+    healthcheck:
+      test: ["CMD-SHELL", "pg_isready -U postgres"]
+      interval: 10s
+      timeout: 5s
+      retries: 5
+
+  movie:
+    image: bibit-movie:1.0.0
+    restart: always
+    ports:
+      - 8081:8081
+    depends_on:
+      postgres:
+        condition: service_healthy
+    environment:
+      OMDB_URL: http://www.omdbapi.com/
+      OMDB_API_KEY: faf7e5bb
+      DB_HOST: postgres
+      DB_PORT: 5432
+      DB_USER: postgres
+      DB_PASS: root
+      DB_NAME: bibit
+      DB_SSL_MODE: disable
+      PORT: 8081
+
+  gateway:
+    image: bibit-gateway:1.0.0
+    restart: always
+    ports:
+      - 8080:8080
+    depends_on:
+      - movie
+    environment:
+      PORT: 8080
+      MOVIE_PORT: 8081
+      MOVIE_SERVICE_HOST: movie
